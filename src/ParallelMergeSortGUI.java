@@ -46,9 +46,18 @@ public class ParallelMergeSortGUI extends JFrame {
             }
         });
 
+        JButton clearButton = new JButton("Clear Array");
+        clearButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                clearArray();
+            }
+        });
+
         inputPanel.add(inputField);
         inputPanel.add(addButton);
         inputPanel.add(sortButton);
+        inputPanel.add(clearButton);
 
         mainPanel.add(listScrollPane, BorderLayout.WEST);
         mainPanel.add(inputPanel, BorderLayout.NORTH);
@@ -66,6 +75,11 @@ public class ParallelMergeSortGUI extends JFrame {
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, "Invalid input. Please enter a valid integer.", "Error", JOptionPane.ERROR_MESSAGE);
         }
+    }
+
+    private void clearArray() {
+        listModel.clear();
+        resultArea.setText("");
     }
 
     private void performSort() {
