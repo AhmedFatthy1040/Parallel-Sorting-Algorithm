@@ -6,6 +6,7 @@ This project implements a parallel version of the merge sort algorithm using Jav
 
 - [Features](#features)
 - [Requirements](#requirements)
+- [Algorithm Details](#algorithm-details)
 - [Usage](#usage)
 - [Project Structure](#project-structure)
 - [Contributing](#contributing)
@@ -21,6 +22,26 @@ This project implements a parallel version of the merge sort algorithm using Jav
 
 - Java Development Kit (JDK) 8 or later.
 - Any Java IDE or build tool (e.g., IntelliJ, Eclipse, Maven).
+
+## Algorithm Details <a name="algorithm-details"></a>
+
+### Merge Sort
+
+Merge sort is a divide-and-conquer algorithm that works by recursively breaking down an array into smaller subarrays until each subarray consists of a single element. It then merges these subarrays in a sorted manner to produce a fully sorted array. The key steps of the merge sort algorithm are as follows:
+
+1. **Divide:** The array is divided into two halves.
+2. **Recursively Sort:** Each half of the array is recursively sorted using the merge sort algorithm.
+3. **Merge:** The sorted halves are merged to produce a single sorted array.
+
+- **Time Complexity:** O(n log n)
+- **Space Complexity:** O(n)
+
+### Parallel Merge Sort
+
+In this project, the merge sort algorithm is parallelized using Java's Fork/Join framework. The array is divided into subarrays, and each subarray is sorted independently in parallel. The sorted subarrays are then merged to obtain the final sorted result. This parallelization can lead to improved sorting performance, especially for large datasets.
+
+- **Time Complexity:** O(n log n) - Parallelization provides more efficient sorting for large datasets.
+- **Space Complexity:** O(n) - Similar to the sequential merge sort, with additional overhead for parallelization.
 
 ## Usage <a name="usage"></a>
 
