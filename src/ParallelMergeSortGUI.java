@@ -68,53 +68,14 @@ public class ParallelMergeSortGUI extends JFrame {
         }
     }
 
-    private int[] mergeSort(int[] array) {
-        if (array.length <= 1) {
-            return array;
-        }
-
-        int midpoint = array.length / 2;
-
-        int[] left = Arrays.copyOfRange(array, 0, midpoint);
-        int[] right = Arrays.copyOfRange(array, midpoint, array.length);
-
-        int[] sortedLeft = mergeSort(left);
-        int[] sortedRight = mergeSort(right);
-
-        return merge(sortedLeft, sortedRight);
-    }
-
-    private int[] merge(int[] left, int[] right) {
-        int[] result = new int[left.length + right.length];
-
-        int i = 0, j = 0, k = 0;
-
-        while (i < left.length && j < right.length) {
-            if (left[i] < right[j]) {
-                result[k++] = left[i++];
-            } else {
-                result[k++] = right[j++];
-            }
-        }
-
-        while (i < left.length) {
-            result[k++] = left[i++];
-        }
-
-        while (j < right.length) {
-            result[k++] = right[j++];
-        }
-
-        return result;
-    }
-
     private void performSort() {
         int[] array = new int[listModel.getSize()];
         for (int i = 0; i < listModel.getSize(); i++) {
             array[i] = listModel.getElementAt(i);
         }
 
-        int[] sortedArray = mergeSort(array);
+        ForkJoinPool forkJoinPool = new ForkJoinPool();
+        int[] sortedArray = forkJoinPool.invoke(new MergeSortTask(array));
 
         resultArea.setText("Original Array: " + Arrays.toString(array) + "\n"
                 + "Sorted Array: " + Arrays.toString(sortedArray));
