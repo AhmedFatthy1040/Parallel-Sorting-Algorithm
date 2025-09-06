@@ -3,6 +3,7 @@ import java.util.concurrent.RecursiveTask;
 
 public class MergeSortTask extends RecursiveTask<int[]> {
     private final int[] array;
+    private static final int THRESHOLD = 100;
 
     MergeSortTask(int[] array) {
         this.array = array;
@@ -12,6 +13,10 @@ public class MergeSortTask extends RecursiveTask<int[]> {
     protected int[] compute() {
         if (array.length <= 1) {
             return array;
+        }
+
+        if (array.length < THRESHOLD) {
+            return sequentialMergeSort(array);
         }
 
         int midpoint = array.length / 2;
@@ -28,6 +33,21 @@ public class MergeSortTask extends RecursiveTask<int[]> {
         int[] sortedRight = rightTask.join();
 
         return merge(sortedLeft, sortedRight);
+    }
+
+    private int[] sequentialMergeSort(int[] arr) {
+        if (arr.length <= 1) {
+            return arr;
+        }
+
+        int midpoint = arr.length / 2;
+        int[] left = Arrays.copyOfRange(arr, 0, midpoint);
+        int[] right = Arrays.copyOfRange(arr, midpoint, arr.length);
+
+        left = sequentialMergeSort(left);
+        right = sequentialMergeSort(right);
+
+        return merge(left, right);
     }
 
     private int[] merge(int[] left, int[] right) {
